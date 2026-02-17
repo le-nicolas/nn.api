@@ -1,11 +1,69 @@
 # nn.api
-I am kind of frustrated and in a slump to how i want to interact with my neural net and luckily, i get to learn the wonders of API!
 
-![API-1024x418](https://github.com/le-nicolas/nn.api/assets/112614851/65b02153-9f6a-4ad2-9d7a-ce2699598b63)
+`nn.api` is a modern API for tabular machine learning.
 
-an API that serves a machine learning model, allowing users to submit data for predictions and retrieve results.
+It lets you train a model from CSV in one call, serve predictions immediately, and monitor incoming data drift with PSI (Population Stability Index).
 
-It turns out, its just simple if you know there is an another approach! :)
-kind of excited and want to do this next!!!
+## Features
+- One-call training from an uploaded CSV file
+- Automatic task detection (classification or regression)
+- Numeric and categorical preprocessing built in
+- Local model registry and artifact storage
+- Batch prediction endpoint with optional class probabilities
+- Drift detection endpoint for numeric features
+- Tests covering training, prediction, and drift checks
 
-<img width="690" alt="Training_Loop_Hero_Image" src="https://github.com/le-nicolas/nn.api/assets/112614851/c9dfaa7c-e573-4b62-a070-5beb37427c0f">
+## Quickstart
+
+### 1) Install
+```bash
+python -m venv .venv
+. .venv/Scripts/activate
+pip install -e .[dev]
+```
+
+### 2) Run
+```bash
+uvicorn app.main:app --reload
+```
+
+### 3) Train a model
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/train" \
+  -F "file=@data/customers.csv" \
+  -F "target_column=churn" \
+  -F "model_name=customer-churn"
+```
+
+### 4) Predict
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/models/<model_id>/predict" \
+  -H "Content-Type: application/json" \
+  -d '{"rows":[{"age":37,"income":54000,"plan":"basic","sessions":3,"last_login_days":14}],"include_probabilities":true}'
+```
+
+### 5) Check drift
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/models/<model_id>/drift" \
+  -H "Content-Type: application/json" \
+  -d '{"rows":[{"age":61,"income":130000,"plan":"basic","sessions":1,"last_login_days":40}]}'
+```
+
+## Endpoints
+- `GET /health`
+- `POST /v1/train`
+- `GET /v1/models`
+- `GET /v1/models/{model_id}`
+- `POST /v1/models/{model_id}/predict`
+- `POST /v1/models/{model_id}/drift`
+
+## Developer Commands
+```bash
+make install
+make test
+make run
+```
+
+## Notes
+- Runtime artifacts are written to `runtime/`.
+- Set `NN_API_DATA_DIR` to override the storage path.
