@@ -4,6 +4,8 @@
 
 It lets you train a model from CSV in one call, serve predictions immediately, and monitor incoming data drift with PSI (Population Stability Index).
 
+![nn.api preview](assets/nn-api-preview.svg)
+
 ## Features
 - One-call training from an uploaded CSV file
 - Automatic task detection (classification or regression)

@@ -1,0 +1,58 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1D2B"/>
+      <stop offset="1" stop-color="#073042"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="230" y1="128" x2="920" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#34D399" stop-opacity="0.18"/>
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="1078" cy="76" r="220" fill="#22D3EE" opacity="0.2" filter="url(#softGlow)"/>
+  <circle cx="132" cy="640" r="190" fill="#10B981" opacity="0.14" filter="url(#softGlow)"/>
+  <rect x="56" y="56" width="1168" height="608" rx="28" fill="#061018" fill-opacity="0.62" stroke="#7DD3FC" stroke-opacity="0.2"/>
+  <rect x="56" y="56" width="1168" height="608" rx="28" fill="url(#accent)"/>
+
+  <text x="94" y="126" fill="#E2F4FF" font-size="42" font-family="Segoe UI, Arial, sans-serif" font-weight="700">nn.api at a glance</text>
+  <text x="94" y="160" fill="#A7C8DD" font-size="20" font-family="Segoe UI, Arial, sans-serif">Train from CSV, serve predictions, monitor drift in one API.</text>
+
+  <rect x="90" y="198" width="356" height="418" rx="18" fill="#091823" stroke="#67E8F9" stroke-opacity="0.4"/>
+  <rect x="462" y="198" width="356" height="418" rx="18" fill="#091823" stroke="#67E8F9" stroke-opacity="0.4"/>
+  <rect x="834" y="198" width="356" height="418" rx="18" fill="#091823" stroke="#67E8F9" stroke-opacity="0.4"/>
+
+  <text x="112" y="236" fill="#D8FAFF" font-size="21" font-family="Segoe UI, Arial, sans-serif" font-weight="600">1) Train</text>
+  <text x="112" y="264" fill="#93C5FD" font-size="15" font-family="Consolas, Menlo, monospace">POST /v1/train</text>
+  <text x="112" y="300" fill="#9FD3EA" font-size="14" font-family="Consolas, Menlo, monospace">{"model_id":"74c6...","task":"classification",</text>
+  <text x="112" y="321" fill="#9FD3EA" font-size="14" font-family="Consolas, Menlo, monospace"> "primary_metric":"f1_weighted","primary_value":0.93}</text>
+  <text x="112" y="366" fill="#D1FAE5" font-size="14" font-family="Consolas, Menlo, monospace">CSV + target_column  ->  best model selected</text>
+  <text x="112" y="396" fill="#D1FAE5" font-size="14" font-family="Consolas, Menlo, monospace">Artifacts saved to runtime/models</text>
+
+  <text x="484" y="236" fill="#D8FAFF" font-size="21" font-family="Segoe UI, Arial, sans-serif" font-weight="600">2) Predict</text>
+  <text x="484" y="264" fill="#93C5FD" font-size="15" font-family="Consolas, Menlo, monospace">POST /v1/models/{id}/predict</text>
+  <text x="484" y="300" fill="#9FD3EA" font-size="14" font-family="Consolas, Menlo, monospace">{"predictions":[1,0],</text>
+  <text x="484" y="321" fill="#9FD3EA" font-size="14" font-family="Consolas, Menlo, monospace"> "probabilities":[{"0":0.07,"1":0.93}, ...]}</text>
+  <text x="484" y="366" fill="#D1FAE5" font-size="14" font-family="Consolas, Menlo, monospace">Batch rows supported</text>
+  <text x="484" y="396" fill="#D1FAE5" font-size="14" font-family="Consolas, Menlo, monospace">Strict feature validation before scoring</text>
+
+  <text x="856" y="236" fill="#D8FAFF" font-size="21" font-family="Segoe UI, Arial, sans-serif" font-weight="600">3) Monitor</text>
+  <text x="856" y="264" fill="#93C5FD" font-size="15" font-family="Consolas, Menlo, monospace">POST /v1/models/{id}/drift</text>
+  <text x="856" y="300" fill="#9FD3EA" font-size="14" font-family="Consolas, Menlo, monospace">{"overall_psi":0.184,</text>
+  <text x="856" y="321" fill="#9FD3EA" font-size="14" font-family="Consolas, Menlo, monospace"> "status":"moderate","features":[...]}</text>
+  <text x="856" y="366" fill="#D1FAE5" font-size="14" font-family="Consolas, Menlo, monospace">PSI bins from training distribution</text>
+  <text x="856" y="396" fill="#D1FAE5" font-size="14" font-family="Consolas, Menlo, monospace">Stable / Moderate / Significant status</text>
+
+  <rect x="112" y="463" width="1056" height="132" rx="14" fill="#021019" stroke="#93C5FD" stroke-opacity="0.28"/>
+  <text x="136" y="497" fill="#A5D8EE" font-size="15" font-family="Consolas, Menlo, monospace">Try it:</text>
+  <text x="136" y="523" fill="#D6F6FF" font-size="15" font-family="Consolas, Menlo, monospace">curl -X POST "http://127.0.0.1:8000/v1/train" -F "file=@data/customers.csv" -F "target_column=churn"</text>
+  <text x="136" y="549" fill="#D6F6FF" font-size="15" font-family="Consolas, Menlo, monospace">curl -X POST "http://127.0.0.1:8000/v1/models/&lt;id&gt;/predict" -H "Content-Type: application/json" -d '{"rows":[...]}'
+</text>
+  <text x="136" y="575" fill="#D6F6FF" font-size="15" font-family="Consolas, Menlo, monospace">curl -X POST "http://127.0.0.1:8000/v1/models/&lt;id&gt;/drift" -H "Content-Type: application/json" -d '{"rows":[...]}'</text>
+
+  <text x="1008" y="639" fill="#83B7CF" font-size="13" font-family="Segoe UI, Arial, sans-serif">Built with FastAPI + scikit-learn</text>
+</svg>
